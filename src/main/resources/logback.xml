@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration scan="false">
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${catalina.home}/logs/geekbot.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.home}/logs/geekbot.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>14</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%-26(%d{yyyy-MM-dd HH:mm:ss,SSS} [%thread]) %-5level %logger{32} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Basic Cyclic buffer -->
+	<appender name="CYCLIC" class="ch.qos.logback.core.read.CyclicBufferAppender">
+		<MaxSize>60</MaxSize>
+	</appender>
+
+    <jmxConfigurator />
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="CYCLIC" />
+	</root>
+</configuration>
